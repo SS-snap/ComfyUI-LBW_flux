@@ -1,0 +1,1572 @@
+{
+  "last_node_id": 120,
+  "last_link_id": 161,
+  "nodes": [
+    {
+      "id": 10,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -337.3660888671875,
+        288.6600036621094
+      ],
+      "size": [
+        318.53338623046875,
+        100.16041564941406
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 29,
+          "label": "CLIP"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            22
+          ],
+          "slot_index": 0,
+          "label": "条件"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "Mechanical robot standing in a desolate desert, Make the scissors hand gesture, robot's visible bolts and panels, battle-worn appearance."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 11,
+      "type": "VAEDecode",
+      "pos": [
+        244.0853729248047,
+        281.54150390625
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 12,
+          "label": "Latent"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 13,
+          "label": "VAE"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            155
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 12,
+      "type": "VAELoader",
+      "pos": [
+        -761.258544921875,
+        405.057861328125
+      ],
+      "size": [
+        311.81634521484375,
+        60.429901123046875
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            13
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "DualCLIPLoader",
+      "pos": [
+        -761.258544921875,
+        235.05810546875
+      ],
+      "size": [
+        310.9037170410156,
+        106.58519744873047
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            29,
+            119,
+            121
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "CLIP"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "clip_l.safetensors",
+        "flux",
+        "default"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "UNETLoader",
+      "pos": [
+        -751.258544921875,
+        555.0576782226562
+      ],
+      "size": [
+        315,
+        82
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            118,
+            122
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "模型"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "flux1-dev-fp8.safetensors",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 15,
+      "type": "SamplerCustomAdvanced",
+      "pos": [
+        30.205373764038086,
+        280.0196228027344
+      ],
+      "size": [
+        183.23292541503906,
+        326
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "noise",
+          "type": "NOISE",
+          "link": 14,
+          "slot_index": 0,
+          "label": "噪波生成"
+        },
+        {
+          "name": "guider",
+          "type": "GUIDER",
+          "link": 15,
+          "slot_index": 1,
+          "label": "引导"
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 16,
+          "slot_index": 2,
+          "label": "采样器"
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 17,
+          "slot_index": 3,
+          "label": "Sigmas"
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 116,
+          "slot_index": 4,
+          "label": "Latent"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            12
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "输出"
+        },
+        {
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": null,
+          "shape": 3,
+          "label": "降噪输出"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamplerCustomAdvanced"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 16,
+      "type": "KSamplerSelect",
+      "pos": [
+        -333.5425720214844,
+        591.964599609375
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            16
+          ],
+          "shape": 3,
+          "label": "采样器"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "widgets_values": [
+        "euler"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "BasicScheduler",
+      "pos": [
+        -228.8292694091797,
+        710.53515625
+      ],
+      "size": [
+        210,
+        106
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 19,
+          "slot_index": 0,
+          "label": "模型"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "links": [
+            17
+          ],
+          "shape": 3,
+          "label": "Sigmas"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BasicScheduler"
+      },
+      "widgets_values": [
+        "simple",
+        20,
+        1
+      ]
+    },
+    {
+      "id": 18,
+      "type": "BasicGuider",
+      "pos": [
+        -340.2776794433594,
+        29.879308700561523
+      ],
+      "size": [
+        309.8044128417969,
+        46
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 20,
+          "slot_index": 0,
+          "label": "模型"
+        },
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 21,
+          "slot_index": 1,
+          "label": "条件"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "GUIDER",
+          "type": "GUIDER",
+          "links": [
+            15
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "引导"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BasicGuider"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 19,
+      "type": "RandomNoise",
+      "pos": [
+        -334.97216796875,
+        445.959716796875
+      ],
+      "size": [
+        312.1712646484375,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "NOISE",
+          "type": "NOISE",
+          "links": [
+            14
+          ],
+          "shape": 3,
+          "label": "噪波生成"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "widgets_values": [
+        30,
+        "fixed"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 20,
+      "type": "FluxGuidance",
+      "pos": [
+        -339.9806823730469,
+        154.06553649902344
+      ],
+      "size": [
+        317.4000244140625,
+        58
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 22,
+          "label": "条件"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            21
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "条件"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxGuidance"
+      },
+      "widgets_values": [
+        3.5
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 21,
+      "type": "ModelSamplingFlux",
+      "pos": [
+        -479.99932861328125,
+        720.9879760742188
+      ],
+      "size": [
+        210,
+        130
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 124,
+          "slot_index": 0,
+          "label": "模型"
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "link": 160,
+          "widget": {
+            "name": "width"
+          },
+          "label": "宽度"
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": 161,
+          "widget": {
+            "name": "height"
+          },
+          "label": "高度"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            19,
+            20
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "模型"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingFlux"
+      },
+      "widgets_values": [
+        1.15,
+        0.5,
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": 27,
+      "type": "EmptySD3LatentImage",
+      "pos": [
+        18.741100311279297,
+        935.057373046875
+      ],
+      "size": [
+        210,
+        106
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "link": 55,
+          "widget": {
+            "name": "width"
+          },
+          "label": "宽度"
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": 56,
+          "widget": {
+            "name": "height"
+          },
+          "label": "高度"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            116
+          ],
+          "slot_index": 0,
+          "label": "Latent"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptySD3LatentImage"
+      },
+      "widgets_values": [
+        1200,
+        896,
+        1
+      ]
+    },
+    {
+      "id": 54,
+      "type": "Int Literal",
+      "pos": [
+        -671.258544921875,
+        1015.057373046875
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            55,
+            160
+          ],
+          "slot_index": 0,
+          "label": "INT"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Int Literal"
+      },
+      "widgets_values": [
+        1024
+      ]
+    },
+    {
+      "id": 55,
+      "type": "Int Literal",
+      "pos": [
+        -671.258544921875,
+        1155.0587158203125
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            56,
+            161
+          ],
+          "slot_index": 0,
+          "label": "INT"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Int Literal"
+      },
+      "widgets_values": [
+        1024
+      ]
+    },
+    {
+      "id": 91,
+      "type": "MakeLBW //Inspire",
+      "pos": [
+        -1547.4910888671875,
+        885.277587890625
+      ],
+      "size": [
+        400,
+        332
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 118,
+          "label": "model"
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 119,
+          "label": "clip"
+        },
+        {
+          "name": "block_vector",
+          "type": "STRING",
+          "link": 147,
+          "widget": {
+            "name": "block_vector"
+          },
+          "label": "block_vector"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "lbw_model",
+          "type": "LBW_MODEL",
+          "links": [
+            120
+          ],
+          "slot_index": 0,
+          "label": "lbw_model"
+        },
+        {
+          "name": "populated_vector",
+          "type": "STRING",
+          "links": null,
+          "label": "populated_vector"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MakeLBW //Inspire"
+      },
+      "widgets_values": [
+        "All",
+        "flux\\robot.safetensors",
+        false,
+        176172354049901,
+        "randomize",
+        4,
+        1,
+        "FLUX-SINGLE-ALL:1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1",
+        "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1",
+        false
+      ]
+    },
+    {
+      "id": 93,
+      "type": "ApplyLBW //Inspire",
+      "pos": [
+        -1129.0931396484375,
+        843.6287841796875
+      ],
+      "size": [
+        315,
+        122
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 122,
+          "label": "model"
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 121,
+          "label": "clip"
+        },
+        {
+          "name": "lbw_model",
+          "type": "LBW_MODEL",
+          "link": 120,
+          "label": "lbw_model"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            124
+          ],
+          "slot_index": 0,
+          "label": "MODEL"
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": null,
+          "label": "CLIP"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ApplyLBW //Inspire"
+      },
+      "widgets_values": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": 106,
+      "type": "LoraBlockWeight_Flux",
+      "pos": [
+        -1898.29931640625,
+        918.8675537109375
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "layer_or_multi_layer",
+          "type": "STRING",
+          "link": 159,
+          "widget": {
+            "name": "layer_or_multi_layer"
+          },
+          "label": "layer_or_multi_layer"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "block_vector",
+          "type": "STRING",
+          "links": [
+            147
+          ],
+          "slot_index": 0,
+          "label": "block_vector"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraBlockWeight_Flux"
+      },
+      "widgets_values": [
+        "1"
+      ]
+    },
+    {
+      "id": 109,
+      "type": "Int",
+      "pos": [
+        -1886.8172607421875,
+        1338.62646484375
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            151
+          ],
+          "slot_index": 0,
+          "label": "整数"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Int"
+      },
+      "widgets_values": [
+        "0"
+      ]
+    },
+    {
+      "id": 112,
+      "type": "MathExpression|pysssss",
+      "pos": [
+        -1272.2840576171875,
+        1378.6981201171875
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "INT,FLOAT,IMAGE,LATENT",
+          "link": 152,
+          "shape": 7,
+          "label": "a"
+        },
+        {
+          "name": "b",
+          "type": "INT,FLOAT,IMAGE,LATENT",
+          "link": null,
+          "shape": 7,
+          "label": "b"
+        },
+        {
+          "name": "c",
+          "type": "INT,FLOAT,IMAGE,LATENT",
+          "link": null,
+          "shape": 7,
+          "label": "c"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            143,
+            156
+          ],
+          "slot_index": 0,
+          "label": "整数"
+        },
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": null,
+          "label": "浮点"
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "a + 1"
+      ]
+    },
+    {
+      "id": 113,
+      "type": "DisplayAny",
+      "pos": [
+        -844.0369262695312,
+        1471.1156005859375
+      ],
+      "size": [
+        210,
+        100
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input",
+          "type": "*",
+          "link": 143,
+          "label": "输入"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            159
+          ],
+          "slot_index": 0,
+          "label": "字符串"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DisplayAny"
+      },
+      "widgets_values": [
+        "raw value"
+      ]
+    },
+    {
+      "id": 114,
+      "type": "easy forLoopStart",
+      "pos": [
+        -1533.0797119140625,
+        1340.4874267578125
+      ],
+      "size": [
+        210,
+        138
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "initial_value1",
+          "type": "*",
+          "link": 151,
+          "shape": 7,
+          "label": "初始值1"
+        },
+        {
+          "name": "initial_value2",
+          "type": "*",
+          "link": null
+        },
+        {
+          "name": "initial_value3",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "flow",
+          "type": "FLOW_CONTROL",
+          "links": [
+            150
+          ],
+          "slot_index": 0,
+          "label": "流",
+          "shape": 5
+        },
+        {
+          "name": "index",
+          "type": "INT",
+          "links": null,
+          "label": "索引"
+        },
+        {
+          "name": "value1",
+          "type": "*",
+          "links": [
+            152
+          ],
+          "slot_index": 2,
+          "label": "值1"
+        },
+        {
+          "name": "value2",
+          "type": "*",
+          "links": [
+            154
+          ],
+          "slot_index": 3
+        },
+        {
+          "name": "value3",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy forLoopStart"
+      },
+      "widgets_values": [
+        58
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 116,
+      "type": "easy forLoopEnd",
+      "pos": [
+        -309.7121276855469,
+        1407.7911376953125
+      ],
+      "size": [
+        178,
+        86
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "flow",
+          "type": "FLOW_CONTROL",
+          "link": 150,
+          "label": "流",
+          "shape": 5
+        },
+        {
+          "name": "initial_value1",
+          "type": "*",
+          "link": 156,
+          "shape": 7,
+          "label": "初始值1"
+        },
+        {
+          "name": "initial_value2",
+          "type": "*",
+          "link": 157
+        },
+        {
+          "name": "initial_value3",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "value1",
+          "type": "*",
+          "links": null,
+          "label": "值1"
+        },
+        {
+          "name": "value2",
+          "type": "*",
+          "links": [
+            158
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "value3",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy forLoopEnd"
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 117,
+      "type": "easy batchAnything",
+      "pos": [
+        -566.7318115234375,
+        1448.99462890625
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any_1",
+          "type": "*",
+          "link": 155,
+          "label": "any_1"
+        },
+        {
+          "name": "any_2",
+          "type": "*",
+          "link": 154,
+          "label": "any_2"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "batch",
+          "type": "*",
+          "links": [
+            157
+          ],
+          "slot_index": 0,
+          "label": "batch"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy batchAnything"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 118,
+      "type": "SaveImage",
+      "pos": [
+        -90.16150665283203,
+        1406.9542236328125
+      ],
+      "size": [
+        1073.6180419921875,
+        930.0454711914062
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 158,
+          "label": "图像"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 119,
+      "type": "Note",
+      "pos": [
+        -1113.028564453125,
+        484.8158264160156
+      ],
+      "size": [
+        313.4952087402344,
+        262.4704895019531
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "You can test the weights of FLUX LoRA. This is a cyclic workflow where each of the 0-58 blocks is set to 0 individually. Through this process, you can test the impact of each block on the final result.\n\nThis is an experimental test because I'm not sure about the origin of these 58 blocks; the results are based on the Inspire pack. However, in my tests, different blocks do have varying impacts on the results, though the test outcomes lack stability.\n\n你可以测试flux lora的权重\n这是一个循环的工作流程，分别让0-58个块单独为0。通过这套流程，你可以测试不同块对最终结果的影响。\n\n这是一个具有实验性的测试，因为我不能确定这58个块的由来，这是根据inspire pack得到的结果。但在我的测试下不同块确实会对结果产生不同的影响，虽然测试结果不具备稳定性。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 120,
+      "type": "Note",
+      "pos": [
+        -1669.0504150390625,
+        1538.3826904296875
+      ],
+      "size": [
+        347.7673645019531,
+        162.86859130859375
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Looping 58 times for each word may not be efficient in utilizing the GPU memory.\n\nSo, you can manually loop 3 rounds, with 20 iterations in each round. After the first round ends, change the starting loop to 20 for the second round, and so on\n\n单词循环58次可能并不利于有效利用显存\n\n所以你可以手动循环3轮，每轮设置20次循环。第一次循环结束时把起始循环改成20，进行第二次循环，以此类推。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    }
+  ],
+  "links": [
+    [
+      12,
+      15,
+      0,
+      11,
+      0,
+      "LATENT"
+    ],
+    [
+      13,
+      12,
+      0,
+      11,
+      1,
+      "VAE"
+    ],
+    [
+      14,
+      19,
+      0,
+      15,
+      0,
+      "NOISE"
+    ],
+    [
+      15,
+      18,
+      0,
+      15,
+      1,
+      "GUIDER"
+    ],
+    [
+      16,
+      16,
+      0,
+      15,
+      2,
+      "SAMPLER"
+    ],
+    [
+      17,
+      17,
+      0,
+      15,
+      3,
+      "SIGMAS"
+    ],
+    [
+      19,
+      21,
+      0,
+      17,
+      0,
+      "MODEL"
+    ],
+    [
+      20,
+      21,
+      0,
+      18,
+      0,
+      "MODEL"
+    ],
+    [
+      21,
+      20,
+      0,
+      18,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      22,
+      10,
+      0,
+      20,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      29,
+      13,
+      0,
+      10,
+      0,
+      "CLIP"
+    ],
+    [
+      55,
+      54,
+      0,
+      27,
+      0,
+      "INT"
+    ],
+    [
+      56,
+      55,
+      0,
+      27,
+      1,
+      "INT"
+    ],
+    [
+      116,
+      27,
+      0,
+      15,
+      4,
+      "LATENT"
+    ],
+    [
+      118,
+      14,
+      0,
+      91,
+      0,
+      "MODEL"
+    ],
+    [
+      119,
+      13,
+      0,
+      91,
+      1,
+      "CLIP"
+    ],
+    [
+      120,
+      91,
+      0,
+      93,
+      2,
+      "LBW_MODEL"
+    ],
+    [
+      121,
+      13,
+      0,
+      93,
+      1,
+      "CLIP"
+    ],
+    [
+      122,
+      14,
+      0,
+      93,
+      0,
+      "MODEL"
+    ],
+    [
+      124,
+      93,
+      0,
+      21,
+      0,
+      "MODEL"
+    ],
+    [
+      143,
+      112,
+      0,
+      113,
+      0,
+      "*"
+    ],
+    [
+      147,
+      106,
+      0,
+      91,
+      2,
+      "STRING"
+    ],
+    [
+      150,
+      114,
+      0,
+      116,
+      0,
+      "FLOW_CONTROL"
+    ],
+    [
+      151,
+      109,
+      0,
+      114,
+      0,
+      "*"
+    ],
+    [
+      152,
+      114,
+      2,
+      112,
+      0,
+      "INT,FLOAT,IMAGE,LATENT"
+    ],
+    [
+      154,
+      114,
+      3,
+      117,
+      1,
+      "*"
+    ],
+    [
+      155,
+      11,
+      0,
+      117,
+      0,
+      "*"
+    ],
+    [
+      156,
+      112,
+      0,
+      116,
+      1,
+      "*"
+    ],
+    [
+      157,
+      117,
+      0,
+      116,
+      2,
+      "*"
+    ],
+    [
+      158,
+      116,
+      1,
+      118,
+      0,
+      "IMAGE"
+    ],
+    [
+      159,
+      113,
+      0,
+      106,
+      0,
+      "STRING"
+    ],
+    [
+      160,
+      54,
+      0,
+      21,
+      1,
+      "INT"
+    ],
+    [
+      161,
+      55,
+      0,
+      21,
+      2,
+      "INT"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "for loop",
+      "bounding": [
+        -1911.3330078125,
+        1262.9071044921875,
+        2904.78955078125,
+        1084.0926513671875
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "LBW",
+      "bounding": [
+        -1908.29931640625,
+        770.02880859375,
+        1104.2061767578125,
+        457.2488708496094
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "sampler",
+      "bounding": [
+        -771.258544921875,
+        -43.72068786621094,
+        1235.343994140625,
+        1266.7786865234375
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.46650738020973354,
+      "offset": [
+        2853.266485282151,
+        85.28571806151186
+      ]
+    },
+    "ue_links": [],
+    "node_versions": {
+      "comfy-core": "0.3.14",
+      "ComfyUI-Inspire-Pack": "ecf8ab6f588bc8442ff7720b383d085ecabbc407",
+      "ComfyUI-Custom-Scripts": "a53ef9b617ed1331640d7a2cd97644995908dc00",
+      "ComfyUI_essentials": "33ff89fd354d8ec3ab6affb605a79a931b445d99",
+      "comfyui-easy-use": "1.2.7",
+      "comfy-image-saver": "65e6903eff274a50f8b5cd768f0f96baf37baea1",
+      "ComfyLiterals": "bdddb08ca82d90d75d97b1d437a652e0284a32ac"
+    },
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
