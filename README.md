@@ -7,7 +7,7 @@ Clone the repository into your custom node directory
 
 ### 简述
 #### 通过这个节点，你可以更方便的测试关于flux_lora不同块对最终结果的影响。这是一个具有实验性的测试，是根据inspire pack中分层预设得到的结果。但在我的测试下不同块确实会对结果产生不同的影响，虽然测试结果不具备稳定性。并且flux基于DIT框架，所以对层的定义也比较模糊，这样大家就很难得到一个非常确切的结果，也很难根据不同固定概念的lora总结出一些规律性经验，所以测试可能是徒劳的，但单个lora的概念或许还是有些规律可以找到。
-#### Through this node, you can more easily test the impact of different blocks in flux_lora on the final result. This is an experimental test, as I am unsure of the origin of these 58 blocks, which are derived from thelayered presets in the inspire pack. However, in my tests, different blocks do indeed have varying effects on the results, although the test results lack stability.Since Flux is based on the DIT framework, the definition of layers is also quite vague, making it difficult to obtain a precise result. It's also hard to summarize any regular patterns from different fixed-concept LoRAs, so testing might be in vain. However, there may still be some patterns to discover within a single LoRA concept.
+#### Through this node, you can more easily test the impact of different blocks in flux_lora on the final result. This is an experimental test,  which are derived from thelayered presets in the inspire pack. However, in my tests, different blocks do indeed have varying effects on the results, although the test results lack stability.Since Flux is based on the DIT framework, the definition of layers is also quite vague, making it difficult to obtain a precise result. It's also hard to summarize any regular patterns from different fixed-concept LoRAs, so testing might be in vain. However, there may still be some patterns to discover within a single LoRA concept.
 
 #### 这是Flux_LoRA的60层
 
