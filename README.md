@@ -1,4 +1,4 @@
-### 使用方法
+### 安装方法
    ```bash
    https://github.com/SS-snap/ComfyUI-LBW_flux.git
    ```
@@ -10,6 +10,10 @@ Clone the repository into your custom node directory
 #### Through this node, you can more easily test the impact of different blocks in flux_lora on the final result. This is an experimental test, as I am unsure of the origin of these 58 blocks, which are derived from thelayered presets in the inspire pack. However, in my tests, different blocks do indeed have varying effects on the results, although the test results lack stability.
 
 ### 使用方法
+   ```bash
+   https://github.com/ltdrdata/ComfyUI-Inspire-Pack
+   ```
+#### 你需要配合此仓库的 make / lora block weight节点共同使用
 
 You can use the following syntax to zero out the weights of different layers:
 
