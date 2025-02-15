@@ -37,18 +37,24 @@ class LoraBlockWeight_Flux:
             if '-' in item:  # 处理范围
                 try:
                     start, end = map(int, item.split('-'))
+                    # 确保范围在有效边界内（1到58）
+                    start = max(1, start)
+                    end = min(58, end)
                     indices.extend(range(start, end + 1))  # 从1开始的索引，直接使用范围
                 except ValueError:
                     continue  # 如果范围无效，忽略该部分
             else:  # 处理单个索引
                 try:
-                    indices.append(int(item))  # 直接使用用户输入的值
+                    index = int(item)
+                    # 确保索引在有效范围内（1到58）
+                    if 1 <= index <= 58:
+                        indices.append(index)
                 except ValueError:
                     continue  # 如果不是有效数字，忽略该部分
 
         # 根据传入的索引列表，将对应位置的数字改为0
         for index in indices:
-            if 0 <= index < len(numbers):
+            if 0 < index <= len(numbers):  # 确保索引有效（1到58）
                 numbers[index - 1] = 0  # 使用直接映射的索引，减1来设置对应位置为0
 
         return numbers
