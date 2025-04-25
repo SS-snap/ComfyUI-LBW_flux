@@ -1,5 +1,5 @@
 [project]
-name = "lbw_flux"
+name = "ComfyUI-LBW_flux"
 description = "Through this node, you can more easily test the impact of different blocks in flux_lora on the final result."
 version = "1.0.0"
 license = {file = "LICENSE"}
@@ -9,6 +9,6 @@ Repository = "https://github.com/SS-snap/ComfyUI-LBW_flux"
 #  Used by Comfy Registry https://comfyregistry.org
 
 [tool.comfy]
-PublisherId = ""
+PublisherId = "snap-demo"
 DisplayName = "ComfyUI-LBW_flux"
 Icon = ""
